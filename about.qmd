@@ -1,0 +1,14 @@
+---
+title: "About"
+image: profile.jpg
+about:
+  template: jolla
+  links:
+    - text: chellecharanteja@vt.edu
+      href: https://mail.google.com
+    - icon: github
+      text: Github
+      href: https://github.com/charan0675/MachineLearningBlog
+---
+
+This blog predominantly focuses on various posts pertaining to topics that play critical roles in different aspects of machine learning. Topics include Probability theory and random variables, Clustering, Linear and nonlinear regression, Classification, Anomaly (outlier detection). The significance and relevance of all these topics are explained comprehensively (along with code samples and data visualization) in the blog posts.

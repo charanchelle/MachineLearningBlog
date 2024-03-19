@@ -1,0 +1,130 @@
+---
+title: "Post 3 - Linear and Nonlinear Regression"
+format:
+  html:
+    self-contained: true
+    toc: true
+    theme: cosmo
+author: "Charan Teja Chelle"
+date: "2023-10-27"
+categories: [code, data visualization]
+image: "regression.jpg"
+---
+
+# Introduction:
+
+Regression is a type of supervised machine learning which is used to capture the relationships between independent and dependent variables, by effectively predicting the continuous output variables (outcome). Few of it's types include linear regression and nonlinear regression. Let's look into the essence of each of these regression types comprehensively.
+
+## Linear Regression
+
+Linear regression assumes a linear relationship between the independent variables and dependent variable, which means that changes in the dependent variable follow those in the independent variables in a linear fashion. Linear regression will be an accurate model only if the observations in the data set are independent of each other. There are many types of linear regression namely simple, multiple, polynomial regression, etc. The primary objective while using any of these linear regression algorithms is to find the best 'Fit Line' equation (refer data visualizations in the below code samples) that can predict the values based on the independent variables.
+
+## Non-Linear Regression
+
+Nonlinear regression is a type of polynomial regression, used to model a non-linear relationship between the dependent and independent variables by using nonlinear functions (i.e., including exponentials, logarithms, trigonometric terms). It allows modeling complex relationships allowing better representation of curved patterns in the data. Real-time applications of nonlinear regression include predicting the spread of infectious diseases, modeling population growth over time, etc.,
+
+# Code:
+
+## Code Sample - 1
+
+This code sample explains non-linear regression with a curvy relationship between the independent variables and the dependent variable. We are using sine function, quadratic term and linear term to generate complex synthetic data with curvy relationship. Moreover, the use of polynomial features lets the model to capture complex relationships beyond linear patterns.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plot
+from sklearn.preprocessing import PolynomialFeatures
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# Generate synthetic data with a curvy relationship
+np.random.seed(42)
+X = 3 * np.random.rand(100, 1) - 1.5
+y = 0.5 * X**2 + X + 2 + np.sin(4 * X) + np.random.randn(100, 1)
+
+# Add polynomial features up to degree 10
+poly_features = PolynomialFeatures(degree=10, include_bias=False)
+X_poly = poly_features.fit_transform(X)
+
+# Train a linear regression model on the polynomial
+lin_reg = LinearRegression()
+lin_reg.fit(X_poly, y)
+
+# Create data points for plotting
+X_new = np.linspace(-1.5, 1.5, 100).reshape(100, 1)
+X_new_poly = poly_features.transform(X_new)
+y_new = lin_reg.predict(X_new_poly)
+
+# Data Visualization using Matplotlib
+plot.figure(figsize=(9, 7))
+
+# Plot the original data points
+plot.scatter(X, y, label='Original Data', color='blue')
+
+# Plot the predicted curve
+plot.plot(X_new, y_new, 'r-', label='Predicted Curve', linewidth=2)
+
+# Add labels and title
+plot.title('Non-Linear Regression with Polynomial Features')
+plot.xlabel('Independent Variable')
+plot.ylabel('Dependent Variable')
+
+# Add legend
+plot.legend()
+
+# Display the results
+plot.show()
+
+# Evaluate the model performance using Mean Squared Error
+y_pred = lin_reg.predict(X_poly)
+mse = mean_squared_error(y, y_pred)
+print(f'Mean Squared Error: {mse}')
+```
+
+## Code Sample - 2
+
+This relatively simple code sample leverages linear regression generating synthetic data with a linear relationship (4 + 3x + random noise). To visualize the original data points and the regression line, we will be using Matplotlib. The resultant data visualization helps you to understand how well the model captures the underlying linear relationship.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plot
+from sklearn.linear_model import LinearRegression
+from sklearn.metrics import mean_squared_error
+
+# Generate synthetic data with a linear relationship
+np.random.seed(42)
+X = 2 * np.random.rand(100, 1)
+y = 4 + 3 * X + np.random.randn(100, 1)
+
+# Train a linear regression model
+lin_reg = LinearRegression()
+lin_reg.fit(X, y)
+
+# Generate data points for plotting the regression line
+X_new = np.linspace(0, 2, 100).reshape(100, 1)
+y_new = lin_reg.predict(X_new)
+
+# Data Visualization using Matplotlib
+plot.figure(figsize=(9, 7))
+
+# Plot the original data points
+plot.scatter(X, y, label='Original Data', color='blue')
+
+# Plot the regression line
+plot.plot(X_new, y_new, 'r-', label='Regression Line', linewidth=2)
+
+# Add labels and title
+plot.title('Linear Regression')
+plot.xlabel('X (Feature)')
+plot.ylabel('y (Target)')
+
+# Add legend
+plot.legend()
+
+# Display the results
+plot.show()
+
+# Evaluate the model performance using Mean Squared Error
+y_pred = lin_reg.predict(X)
+mse = mean_squared_error(y, y_pred)
+print(f'Mean Squared Error: {mse}')
+```

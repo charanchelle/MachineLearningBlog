@@ -1,0 +1,95 @@
+---
+title: "Post 4 - Classification"
+format:
+  html:
+    self-contained: true
+    toc: true
+    theme: cosmo
+author: "Charan Teja Chelle"
+date: "2023-11-19"
+categories: [code, data visualization]
+image: "classification.jpg"
+---
+
+# Introduction
+
+Classification is another type of supervised learning in machine learning where the primary objective is to get trained on a labeled dataset in order to predict the class or category of an object or instance. For instance, consider a classification model is trained on a dataset of images labeled as either lions or tigers and then it will predict the class of unseen, new images of lions or tigers solely based on their features such as appearance, color, and shape. Classification is of two types namely Binary (classify input into one of two classes) and Multiclass (classify input into one of several classes) classification. Various types of classification algorithms include Logistic Regression, K-Nearest Neighbors, Naive Bayes, Decision Trees etc., Spam detection and handwriting recognition are some of the real-time applications of classification in machine learning.
+
+# Code
+
+This code sample illustrates complete pipeline for classification with proper emphasis on data preprocessing, training, testing, and visualization of decision boundaries. In this case, we will be using Iris dataset and K-Nearest Neighbors algorithm for classification and visualizing the results. Furthermore, classification report is also generated along with decision boundaries being plotted effectively.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plot
+from sklearn import datasets
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score, classification_report
+from sklearn.model_selection import train_test_split
+from sklearn.decomposition import PCA
+
+# Load the Iris dataset
+iris = datasets.load_iris()
+X = iris.data
+y = iris.target
+
+# Splitting the derived data into training and testing sets
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# Standardize the features (it's completely optional but often beneficial)
+scaler = StandardScaler()
+X_train_std = scaler.fit_transform(X_train)
+X_test_std = scaler.transform(X_test)
+
+# Apply Principal Component Analysis (PCA) for dimensionality reduction to two components
+pca = PCA(n_components=2)
+X_train_pca = pca.fit_transform(X_train_std)
+X_test_pca = pca.transform(X_test_std)
+
+# Train a k-Nearest Neighbors classifier
+knn_classifier = KNeighborsClassifier(n_neighbors=3)
+knn_classifier.fit(X_train_pca, y_train)
+
+# Make predictions on the test set
+y_pred = knn_classifier.predict(X_test_pca)
+
+# Evaluate the accuracy of the classifier
+accuracy = accuracy_score(y_test, y_pred)
+print(f'Accuracy: {accuracy:.2f}')
+
+# Visualize the decision boundaries
+plot.figure(figsize=(9, 7))
+
+# Plot the training points
+plot.scatter(X_train_pca[:, 0], X_train_pca[:, 1], c=y_train, cmap='viridis', edgecolor='k', s=70, label='Training Data')
+
+# Plot the testing points
+plot.scatter(X_test_pca[:, 0], X_test_pca[:, 1], c=y_test, cmap='viridis', marker='x', s=100, label='Testing Data (True)')
+
+# Plot the decision boundaries
+h = 0.02  # step size in the mesh
+x_min, x_max = X_test_pca[:, 0].min() - 1, X_test_pca[:, 0].max() + 1
+y_min, y_max = X_test_pca[:, 1].min() - 1, X_test_pca[:, 1].max() + 1
+xx, yy = np.meshgrid(np.arange(x_min, x_max, h), np.arange(y_min, y_max, h))
+Z = knn_classifier.predict(np.c_[xx.ravel(), yy.ravel()])
+Z = Z.reshape(xx.shape)
+
+# Plot the decision boundaries
+plot.contourf(xx, yy, Z, cmap='viridis', alpha=0.3, levels=np.arange(len(np.unique(y))) - 0.5)
+
+# Add labels and title
+plot.title('k-Nearest Neighbors Classification with Principal Component Analysis')
+plot.xlabel('Principal Component 1')
+plot.ylabel('Principal Component 2')
+
+# Add legend
+plot.legend()
+
+# Display the results
+plot.show()
+
+# Display classification report
+print('Classification Report:\n', classification_report(y_test, y_pred))
+
+```

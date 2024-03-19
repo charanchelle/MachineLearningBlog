@@ -1,0 +1,4 @@
+- source: project
+  quarto-pub:
+    - id: c248082e-a2cc-4a7a-a70a-35c88752001a
+      url: 'https://chellecharanteja.quarto.pub/machine-learning-blog'

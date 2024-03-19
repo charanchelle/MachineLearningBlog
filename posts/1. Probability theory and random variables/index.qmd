@@ -1,0 +1,106 @@
+---
+title: "Post 1 - Probability Theory and Random Variables"
+format:
+  html:
+    self-contained: true
+    toc: true
+    theme: cosmo
+author: "Charan Teja Chelle"
+date: "2023-09-15"
+categories: [code, data visualization]
+image: "probabilitytheory.jpg"
+---
+
+# Introduction:
+
+Two fundamental ideas in the wide field of machine learning - Random Variables and Probability Theory, pave way for reliable algorithms and accurate prediction, mitigating uncertainty to maximum possible extent. In this blog post, we will delve deeper into the core principles of these concepts and take a loot at their significance and relevance in current industry.
+
+## Probability Theory
+
+Probability theory provides a consistent framework for the quantification and manipulation of uncertainty with discrete and continuous probability distributions. It also extends its arms into Bayesian inference and Conditional probability, which are the backbone of probabilistic modeling.
+
+## Random Variables
+
+Random variables (discrete and continuous) assume the numerical value of all possible outcomes of an experiment, serving as a bridge between probability theory and data.
+
+# Code:
+
+## Code Sample - 1
+
+This is a code sample that involves generating random variables and computing probabilities. A six-sided die is rolled 20 times (input) and probabilities of each outcome is calculated and displayed accordingly (output)
+
+```{python}
+import random
+
+# Generating a Random Variable - Rolling a six-sided die
+def roll_die():
+    return random.randint(1, 6)
+
+# Simulating an Experiment - Rolling a six-sided die 20 times
+number_of_rolls = 20
+all_rolls = [roll_die() for _ in range(number_of_rolls)]
+
+# Computing Probability Distribution
+def compute_probability(dice_outcomes):
+    probabilities = {i: dice_outcomes.count(i) / len(dice_outcomes) for i in set(dice_outcomes)}
+    return probabilities
+
+# Displaying Results
+print(f"Simulated Rolls: {all_rolls}")
+print("\nProbability Distribution:")
+for outcome, probability in compute_probability(all_rolls).items():
+    print(f"Outcome {outcome}: Probability {probability:.2f}")
+```
+
+## Code Sample - 2
+
+This relatively complex code sample deals with conditional probability where 'probability of playing cricket given the weather' is already declared; and weather conditions for 20 days are simulated, which serves as input; output will be finding cricket playing possibilities for 20 days, backed with the data visualization table stating 'weather conditions' on the X-axis and 'cricket playing possibilities' on Y-axis with scattered points plotting conditional probability.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Simulating Data - Weather and Cricket Playing
+np.random.seed(45)
+
+# Input: Simulating weather conditions (0: Sunny, 1: Overcast, 2: Rainy) for 20 days
+weather_conditions = np.random.choice([0, 1, 2], size=20, p=[0.5, 0.2, 0.3])
+
+# Conditional Probability - Probability of playing cricket given the weather
+prob_play_cricket_given_sunny = 0.9
+prob_play_cricket_given_overcast = 0.95
+prob_play_cricket_given_rainy = 0.6
+
+play_cricket = []
+
+for weather in weather_conditions:
+    if weather == 0:
+        play_cricket.append(np.random.choice([1, 0], p=[prob_play_cricket_given_sunny, 1 - prob_play_cricket_given_sunny]))
+    elif weather == 1:
+        play_cricket.append(np.random.choice([1, 0], p=[prob_play_cricket_given_overcast, 1 - prob_play_cricket_given_overcast]))
+    else:
+        play_cricket.append(np.random.choice([1, 0], p=[prob_play_cricket_given_rainy, 1 - prob_play_cricket_given_rainy]))
+
+# Displaying Results
+print(f"Simulated Weather probabilities for 20 days: {weather_conditions}")
+print(f"\nResultant Cricket playing probabilities for 20 days: {play_cricket}")
+
+# Data Visualization using Seaborn and Matplotlib
+plt.figure(figsize=(9, 7))
+
+# Plotting Conditional Probability with Swarm Plot
+sns.swarmplot(x=weather_conditions, y=play_cricket,hue=weather_conditions, palette="pastel", size=8)
+plt.title('Conditional Probability: Cricket Playing Given Weather')
+plt.xlabel('Weather Conditions (0: Sunny, 1: Overcast, 2: Rainy)')
+plt.ylabel('Play Cricket (1: Yes, 0: No)')
+
+# Displaying Results
+plt.show()
+
+
+
+
+```
+
+## 

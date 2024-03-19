@@ -1,0 +1,73 @@
+---
+title: "Post 5 - Anomaly/outlier detection"
+format:
+  html:
+    self-contained: true
+    toc: true
+    theme: cosmo
+author: "Charan Teja Chelle"
+date: "2023-12-04"
+categories: [code, data visualization]
+image: "anomalydetection.jpg"
+---
+
+# Introduction
+
+Anomaly detection, aka outlier detection is a machine learning task that involves identifying patterns or instances in data that do not confine to the expected behavior. These instances are considered anomalies or outliers as they significantly deviate from the majority of data. Anomaly detection can be done in two ways namely Supervised anomaly detection and Unsupervised anomaly detection. Outlier detection plays a vital role in ensuring the security, integrity and reliability of systems by pointing out suspicious or unforeseen events. Few real-time applications of anomaly detection include fraud detection, network security, manufacturing and quality control, healthcare, etc.,
+
+# Code
+
+This code sample demonstates a simple anomaly detection code using 'Isolation Forest' algorithm and toy dataset. We will initially be generating a toy dataset with both normal and anomalous data points, then train an Isolation Forest model, and ultimately visualize the results. The data visualizations obtained after running the below code chunk clearly helps us understand how the Isolation Forest algorithm separates normal and anomalous data points.
+
+```{python}
+import numpy as np
+import matplotlib.pyplot as plot
+from sklearn.ensemble import IsolationForest
+
+# Create a toy dataset with normal and anomalous data points
+np.random.seed(42)
+normal_data = np.random.normal(loc=0, scale=1, size=(800, 2))  # Normal data points
+anomalous_data = np.random.normal(loc=5, scale=1, size=(20, 2))  # Anomalous data points
+
+# Merge normal and anomalous data
+data = np.vstack([normal_data, anomalous_data])
+
+# Shuffle the data
+np.random.shuffle(data)
+
+# Visualize the dataset
+plot.figure(figsize=(9, 7))
+plot.scatter(data[:, 0], data[:, 1], c='b', marker='o', label='Normal Data', alpha=0.7)
+plot.scatter(anomalous_data[:, 0], anomalous_data[:, 1], c='r', marker='x', label='Anomalous Data')
+plot.title('Toy Dataset for Anomaly Detection')
+plot.xlabel('Feature 1')
+plot.ylabel('Feature 2')
+plot.legend()
+plot.show()
+
+# Train an Isolation Forest model by setting 'contamination' parameter to expected proportion of anomalies in dataset
+isolation_forest = IsolationForest(contamination=0.02, random_state=42)
+isolation_forest.fit(data)
+
+# Predict anomalies (1 for normal, -1 for anomaly)
+predictions = isolation_forest.predict(data)
+
+# Visualize the Isolation Forest results
+plot.figure(figsize=(9, 7))
+
+# Plot normal data points
+plot.scatter(data[predictions == 1][:, 0], data[predictions == 1][:, 1], c='b', marker='o', label='Normal Data')
+
+# Plot anomalous data points
+plot.scatter(data[predictions == -1][:, 0], data[predictions == -1][:, 1], c='r', marker='x', label='Anomalous Data')
+
+# Highlight true anomalous data points
+plot.scatter(anomalous_data[:, 0], anomalous_data[:, 1], c='g', marker='*', s=200, label='True Anomalies')
+
+plot.title('Isolation Forest Anomaly Detection')
+plot.xlabel('Feature 1')
+plot.ylabel('Feature 2')
+plot.legend()
+plot.show()
+
+```

@@ -1,0 +1,14 @@
+{
+  "hash": "3c771aa6337747a2d40048b184ce13c7",
+  "result": {
+    "markdown": "---\ntitle: \"Post 2 - Clustering\"\nauthor: \"Charan Teja Chelle\"\ndate: \"2023-12-06\"\ncategories: [news, code, analysis]\nimage: \"image.jpg\"\n---\n\n\nClusteringgggggggggg\n\nxx\n\n\n::: {.cell}\n\n```{.r .cell-code}\n1 + 1\n```\n\n::: {.cell-output .cell-output-stdout}\n```\n[1] 2\n```\n:::\n:::\n",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "hash": "613388cee116beb8d043e8d48c8c61cb",
+  "result": {
+    "markdown": "---\ntitle: Welcome To My Blog\nauthor: Tristan O'Malley\ndate: '2023-12-01'\ncategories:\n  - news\n---\n\nThis is the first post in a Quarto blog. Welcome!\\<table align=\"left\"\\>\n\n\\<td\\>\n\n\\<a href=\"https://colab.research.google.com/github/ageron/handson-ml3/blob/main/03_classification.ipynb\" target=\"\\_parent\"\\>\\<img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/\\>\\</a\\>\n\n\\</td\\>\n\n\\<td\\>\n\n\\<a target=\"\\_blank\" href=\"https://kaggle.com/kernels/welcome?src=https://github.com/ageron/handson-ml3/blob/main/03_classification.ipynb\"\\>\\<img src=\"https://kaggle.com/static/images/open-in-kaggle.svg\" /\\>\\</a\\>\n\n\\</td\\>\n\n\\</table\\>\n\nThis project requires Python 3.7 or above:\n\n\\`\\`\\`{python}\n\nimport sys\n\nassert sys.version_info \\>= (3, 7)\n\n\\`\\`\\`\n\nIt also requires Scikit-Learn ≥ 1.0.1:\n\n\\`\\`\\`{python}\n\nfrom packaging import version\n\nimport sklearn\n\nassert version.parse(sklearn.\\_\\_version\\_\\_) \\>= version.parse(\"1.0.1\")\n\n\\`\\`\\`\n\nJust like in the previous chapter, let's define the default font sizes to make the figures prettier:\n\n",
+    "supporting": [
+      "index_files"
+    ],
+    "filters": [],
+    "includes": {}
+  }
+}
